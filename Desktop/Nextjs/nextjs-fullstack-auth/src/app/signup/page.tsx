@@ -1,10 +1,15 @@
 "use client";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import {useRouter} from "next/navigation";
 import axios from "axios";
-import React, { useState } from "react";
-import dotenv from "dotenv";
-dotenv.config();
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Signup() {
+
+
+
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -12,14 +17,19 @@ export default function Signup() {
   });
 
   const onSignup = async () => {
+    
     console.log(user);
      try {
-      
+
       const response = await axios.post("/api/signup", user);
       console.log("Login success", response.data);
+      // toast.success("SignUp Sucessful")
+      router.push("/login");   
       
-     } catch (error) {
       
+     } catch (error:any) {
+      console.log("Signup failed", error.message);
+      toast.error(error.message);
      }
   };
 
@@ -38,7 +48,7 @@ export default function Signup() {
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
-          Flowbite{ process.env.NEXT_PUBLIC_ANALYTICS_ID} dsjk
+          Flowbite
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -130,6 +140,7 @@ export default function Signup() {
               <button
                 type="button"
                 onClick={onSignup}
+                
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 Sign in
@@ -147,6 +158,13 @@ export default function Signup() {
           </div>
         </div>
       </div>
+      <Toaster
+      position="top-left"
+      reverseOrder={false}
+      toastOptions={{
+        duration : 3000,
+      }
+      } />
     </section>
   );
 }

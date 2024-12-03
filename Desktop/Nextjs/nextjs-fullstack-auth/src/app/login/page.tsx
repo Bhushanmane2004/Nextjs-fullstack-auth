@@ -1,5 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import {useRouter} from "next/navigation";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -17,8 +21,15 @@ export default function Login() {
 
   const onlogin = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    console.log(user);
-    // Add login logic here
+    try {
+      console.log(user);
+    const responce =await axios.post("/api/login",user);
+    console.log(responce);
+    toast.success("Login")
+
+    } catch (error:any) {
+      toast.error("error")
+    }
   };
 
   return (
@@ -118,6 +129,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <Toaster />
     </section>
   );
 }

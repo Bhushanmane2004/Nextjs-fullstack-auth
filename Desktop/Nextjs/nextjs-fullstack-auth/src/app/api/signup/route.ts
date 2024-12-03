@@ -3,6 +3,8 @@ import User from "@/model/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import dotenv from "dotenv";
+
+
 dotenv.config();
 
 
