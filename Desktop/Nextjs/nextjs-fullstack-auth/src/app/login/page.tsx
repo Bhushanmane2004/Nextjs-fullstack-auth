@@ -1,11 +1,11 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import {useRouter} from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
+import {useRouter} from "next/navigation";
 
 export default function Login() {
+  const router= useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -26,6 +26,8 @@ export default function Login() {
     const responce =await axios.post("/api/login",user);
     console.log(responce);
     toast.success("Login")
+    router.push('/profile')
+    
 
     } catch (error:any) {
       toast.error("error")
